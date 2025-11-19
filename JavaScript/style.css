@@ -1,0 +1,177 @@
+/* ================================================================
+  Styles for the analog clock
+  Author: Irem Dönmez
+  Purpose: Responsive styling for clock 
+  used Deepl for english translation
+================================================================ */
+
+/* Normalize default spacing and box sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Page layout: center the clock horizontally and vertically */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #620707;
+  /* for a vintage home-like style */
+  font-family: Arial, sans-serif;
+}
+
+/* Wrapper that establishes the clock's size and positioning */
+.clock {
+  width: 300px;
+  /* Default size, responsive with percentage below */
+  height: 300px;
+  position: relative;
+}
+
+/* Outer circular face with a rim */
+.outer-clock-face {
+  width: 100%;
+  height: 100%;
+  border: 10px solid #333;
+  border-radius: 50%;
+  position: relative;
+  background-color: #ffffff;
+}
+
+/* Major hour tick marks (four primary ticks) */
+.marking {
+  /* Place the tick centered; rotation + translation will locate it on the rim */
+  width: 6px;
+  height: 22px;
+  background-color: #333;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  border-radius: 2px;
+}
+
+
+
+/* First hour marking at the top (12 o'clock) */
+.marking-one {
+  transform: translate(-50%, -50%)
+    /* center the marking exactly at the middle point */
+    rotate(0deg)
+    /* rotate 0 degrees → points straight up */
+    translateY(-120px);
+  /* move the marking outward from the center */
+}
+
+/* Second hour marking at 3 o'clock */
+.marking-two {
+  transform: translate(-50%, -50%)
+    /* center the marking */
+    rotate(90deg)
+    /* rotate 90 degrees → points to the right */
+    translateY(-120px);
+  /* move the marking outward from the center */
+}
+
+/* Third hour marking at 6 o'clock */
+.marking-three {
+  transform: translate(-50%, -50%)
+    /* center the marking */
+    rotate(180deg)
+    /* rotate 180 degrees → points downwards */
+    translateY(-120px);
+  /* move the marking outward from the center */
+}
+
+/* Fourth hour marking at 9 o'clock */
+.marking-four {
+  transform: translate(-50%, -50%)
+    /* center the marking */
+    rotate(270deg)
+    /* rotate 270 degrees → points to the left */
+    translateY(-120px);
+  /* move the marking outward from the center */
+}
+
+
+/* Inner face that contains the rotating hands */
+.inner-clock-face {
+  width: 90%;
+  height: 90%;
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  border-radius: 50%;
+}
+
+/* Base styles for clock hands (shared properties) */
+.hand {
+  width: 50%;
+  height: 4px;
+  background-color: #333;
+  position: absolute;
+  top: 50%;
+  /* pivot at the right center of the element so rotating moves the hand around the clock
+center. Keep initial rotation neutral 0deg and let JS set the live rotation. */
+  transform-origin: 100% 50%;
+  transform: rotate(0deg);
+  transition: transform 0.05s ease-in-out;
+/* smooth rotation */
+  border-radius: 2px;
+}
+
+/* Hour hand:shorter length and thicker width */
+.hour-hand {
+  width: 50%;
+  height: 7px;
+  background-color: #000000;
+}
+
+/* Minute hand:medium length and weight */
+.min-hand {
+  width: 50%;
+  height: 4px;
+  background-color: #6a6161;
+}
+
+/* Second hand:slim and colored for visibility */
+.second-hand {
+  width: 50%;
+  height: 2px;
+  background-color: red;
+}
+
+/* Small central cap to cover the start of the hands */
+.inner-clock-face::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  background-color: #333;
+  /*Same as main color */
+  border-radius: 50%;
+  z-index: 10;
+  /*Sits above the hands */
+  box-shadow: 0 0 0 3px #ffffff;
+  /*Subtle white ring to blend with inner face */
+  pointer-events: none;
+}
+
+/*Ensure hands render below the cap */
+.inner-clock-face .hand {
+  z-index: 1
+}
+
+/*Responsive behavior: reduce clock size on narrow viewports */
+@media (max-width: 400px) {
+  .clock {
+    width: 200px;
+    height: 200px;
+  }
+}
